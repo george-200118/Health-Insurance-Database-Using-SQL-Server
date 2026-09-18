@@ -50,24 +50,17 @@ City varchar(50),
 Address varchar(100),
 primary key (Provider_Id),
 )
-select * from Coverage_Claims
-insert into Customers values('Õ”«„','2007-07-22','–ﬂ—','«·“»œ«‰Ì-‘«—⁄ «·›—œÊ”-»‰«¡ —ﬁ„ 15','ÿ—ÿÊ”','0988730409')
-insert into Coverage values('œÊ«¡',30000)
-insert into Contract values(10,'2023-11-02','2024-11-02')
-insert into Claims values(10,'2024-01-11',225000,'Active',10)
-insert into Provider values('ÿ»Ì» √”‰«‰','œ.»”«„ œ—Ê»Ì','0114444500','œ„‘ﬁ','«·ﬁ’«⁄-„ﬁ«»· „‘›Ï «·“Â—«ÊÌ')
-insert into Coverage_Claims values(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10)
-
+--Queries
+--List Customers That Their Contracts Ends Today
 select Name from Customers 
 join Contract on Customers.Customer_id=Contract.Customer_Id
 where End_Date=CAST(getdate()as DATE)
-
+--List Customers Where Claim Status Is Active
 select Name from Customers 
 join Claims on Customers.Customer_id=Claims.Customers_Id
 where Status='Active' 
-
+--Calculate The Sum Of The Claims Where It's Status Is Active And Its Date Between The Claim Date And Today
 select SUM(Total_Amount)as Total_Paid from Claims
 where Status='Active' and Claim_Date between Claim_Date and CAST(getdate()as DATE)
-
+--View All The Providers Info
 select Name,Type,Phone,City,Address from Provider
-DBCC CHECKIDENT ('Claims', RESEED, 7);
